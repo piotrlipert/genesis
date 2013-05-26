@@ -56,7 +56,7 @@ public class FileSender implements Runnable{
 	public synchronized int getProgress()
 	{
 		
-		// Progress should be (commandsSent/commandCount) * 100
+		// Progress syntax please (commandsSent/commandCount) * 100
 		return 0;
 		
 		
