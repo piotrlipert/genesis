@@ -26,6 +26,9 @@ public class Genesis extends SimpleApplication {
 	
 	
     public static void main(String[] args){
+    	
+    	// This is the main loop. Comment this to do your shit.
+    	
         Genesis app = new Genesis();
         app.initSettings();
         app.start(); 

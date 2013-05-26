@@ -148,5 +148,6 @@
 			<attribute name="javadoc_location" value="file:/D:/lib/monkey/javadoc/"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="D:/lib/serialcomm/comm.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
