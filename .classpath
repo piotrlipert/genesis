@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
+	<classpathentry kind="lib" path="D:/lib/monkey/jMonkeyEngine3.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="file:/D:/lib/monkey/javadoc/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/lib/monkey/lib/xmlpull-xpp3.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="file:/D:/lib/monkey/javadoc/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/lib/monkey/lib/eventbus.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="file:/D:/lib/monkey/javadoc/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/lib/monkey/lib/gluegen-rt.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="file:/D:/lib/monkey/javadoc/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/lib/monkey/lib/jbullet.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="file:/D:/lib/monkey/javadoc/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/lib/monkey/lib/jglfont-core.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="file:/D:/lib/monkey/javadoc/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/lib/monkey/lib/jinput.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="file:/D:/lib/monkey/javadoc/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/lib/monkey/lib/jME3-blender.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="file:/D:/lib/monkey/javadoc/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/lib/monkey/lib/jME3-core.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="file:/D:/lib/monkey/javadoc/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/lib/monkey/lib/jME3-desktop.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="file:/D:/lib/monkey/javadoc/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/lib/monkey/lib/jME3-effects.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="file:/D:/lib/monkey/javadoc/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/lib/monkey/lib/jME3-jbullet.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="file:/D:/lib/monkey/javadoc/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/lib/monkey/lib/jME3-jogg.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="file:/D:/lib/monkey/javadoc/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/lib/monkey/lib/jME3-lwjgl.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="file:/D:/lib/monkey/javadoc/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/lib/monkey/lib/jME3-lwjgl-natives.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="file:/D:/lib/monkey/javadoc/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/lib/monkey/lib/jME3-networking.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="file:/D:/lib/monkey/javadoc/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/lib/monkey/lib/jME3-niftygui.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="file:/D:/lib/monkey/javadoc/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/lib/monkey/lib/jME3-plugins.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="file:/D:/lib/monkey/javadoc/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/lib/monkey/lib/jME3-terrain.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="file:/D:/lib/monkey/javadoc/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/lib/monkey/lib/joal.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="file:/D:/lib/monkey/javadoc/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/lib/monkey/lib/j-ogg-oggd.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="file:/D:/lib/monkey/javadoc/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/lib/monkey/lib/j-ogg-vorbisd.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="file:/D:/lib/monkey/javadoc/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/lib/monkey/lib/jogl-all.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="file:/D:/lib/monkey/javadoc/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/lib/monkey/lib/lwjgl.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="file:/D:/lib/monkey/javadoc/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/lib/monkey/lib/nifty.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="file:/D:/lib/monkey/javadoc/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/lib/monkey/lib/nifty-default-controls.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="file:/D:/lib/monkey/javadoc/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/lib/monkey/lib/nifty-examples.jar"/>
+	<classpathentry kind="lib" path="D:/lib/monkey/lib/nifty-style-black.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="file:/D:/lib/monkey/javadoc/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/lib/monkey/lib/stack-alloc.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="file:/D:/lib/monkey/javadoc/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/lib/monkey/lib/vecmath.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="file:/D:/lib/monkey/javadoc/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
