@@ -1,4 +1,4 @@
-package utils;
+package guiutils;
 
 import genesis.Genesis;
 

@@ -1,4 +1,4 @@
-package utils;
+package guiutils;
 
 public class KeyListener {
 
