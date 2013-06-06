@@ -211,7 +211,7 @@ public class Genesis {
        createCanvas(appClass);
        
        try {
-           Thread.sleep(500);
+           Thread.sleep(50);
        } catch (InterruptedException ex) {
        }
        
