@@ -1,12 +1,11 @@
 package guiutils;
 
-import genesis.Genesis;
+import genesis.GenesisApp;
 
 import java.awt.Color;
 import java.util.ArrayList;
 
 import jme3tools.optimize.GeometryBatchFactory;
-
 import com.jme3.light.AmbientLight;
 import com.jme3.light.DirectionalLight;
 import com.jme3.light.PointLight;
@@ -24,8 +23,60 @@ import com.jme3.util.BufferUtils;
 
 public class DisplayUtils {
 	
-public Mesh createGeometry(String string, STLInterface s) 
+ArrayList<Geometry> loadedObjects = new ArrayList<Geometry>();
+ArrayList<ArrayList<Facet>> loadedSTLFiles = new ArrayList<ArrayList<Facet>>();
+GenesisApp app;
+public DisplayUtils(GenesisApp a)
+{
+	app = a;
+}
+
+public void initialize()
+{
+	initLight();
+	initTable();
+}
+
+public void loadFile(String path)
+{
+	Mesh outMesh = createGeometry(path);
+    Geometry g = new Geometry("STLFILE", outMesh);
+    
+    Material mat = initSTLMaterial();
+    g.setMaterial(mat);
+    g.move(0f, 0f, 0f);
+    g.rotate((float) (-Math.PI/2), 0, 0);
+	app.loading = true;
+	try {
+		Thread.sleep(50);
+	} catch (InterruptedException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+    app.getRootNode().attachChild(g); 
+    loadedObjects.add(g);
+    app.loading = false;
+}
+
+public void reinitialize()
+{
+	app.loading = true;
+	app.s.clear();
+	try {
+		Thread.sleep(50);
+	} catch (InterruptedException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+		app.getRootNode().detachAllChildren();
+		initTable();
+
+	app.loading = false;
+}
+	
+public Mesh createGeometry(String string) 
 {		
+	
 		ArrayList<Triangle> tr = new ArrayList<Triangle>();
     	Vector3f[] normals = new Vector3f[3];
     	Vector3f[] verti = new Vector3f[3];
@@ -34,21 +85,21 @@ public Mesh createGeometry(String string, STLInterface s)
     	Vector2f[] texCoord = new Vector2f[3];
     	int[] index = new int[3];
         Mesh outMesh = new Mesh(); 
-
+        
     	ArrayList<Geometry> geoms = new ArrayList<Geometry>();
     	long startTime = System.currentTimeMillis();
-		s.loadSTLfile("resources/dragon.stl");
+		app.s.loadSTLfile(string);
 
-		Vector3f[] normals_batchfree = new Vector3f[s.facets.size()*3];
-		Vector3f[] vertex_batchfree = new Vector3f[s.facets.size()*3];
-		Vector3f[] texture_batchfree = new Vector3f[s.facets.size()*3];
+		Vector3f[] normals_batchfree = new Vector3f[app.s.facets.size()*3];
+		Vector3f[] vertex_batchfree = new Vector3f[app.s.facets.size()*3];
+		Vector3f[] texture_batchfree = new Vector3f[app.s.facets.size()*3];
 		
 		
 		
     	int i = 0;
     	int k = 0;
     	int z = 0;
-    	for(Facet x : s.facets)
+    	for(Facet x : app.s.facets)
     	{
     		Triangle t = new Triangle(x.v[0],x.v[1],x.v[2]);
     		t.calculateNormal();
@@ -92,7 +143,7 @@ public Mesh createGeometry(String string, STLInterface s)
         	Mesh mymesh = new Mesh();
     		mymesh.setBuffer(Type.Position, 3,BufferUtils.createFloatBuffer(verti));
         	mymesh.setBuffer(Type.TexCoord, 2, BufferUtils.createFloatBuffer(texCoord));
-
+        	
     		mymesh.setBuffer(Type.Normal, 3, BufferUtils.createFloatBuffer(normals));
         	mymesh.setBuffer(Type.Index, 3, BufferUtils.createIntBuffer(index));
         	mymesh.updateBound();
@@ -124,7 +175,7 @@ public Mesh createGeometry(String string, STLInterface s)
 
 
 
-public void initLight(Genesis app) {
+public void initLight() {
 	PointLight lamp_light = new PointLight();
     lamp_light.setColor(ColorRGBA.White);
     lamp_light.setRadius(40000000f);
@@ -165,7 +216,7 @@ public void initLight(Genesis app) {
     app.getRootNode().addLight(al);
 }
 
-public Material initSTLMaterial(Genesis app) 
+public Material initSTLMaterial() 
 {
     Material mat_lit = new Material(app.getAssetManager(), "Common/MatDefs/Light/Lighting.j3md");
     
@@ -186,7 +237,7 @@ public Material initSTLMaterial(Genesis app)
 
 
 
-public void initTable(Genesis app) {
+public void initTable() {
 
 		  Geometry g = new Geometry("wireframe grid", new Grid(10000, 10000, 10f) );
 		  Material mat = new Material(app.getAssetManager(), "Common/MatDefs/Misc/Unshaded.j3md");
@@ -197,7 +248,7 @@ public void initTable(Genesis app) {
 		  
 		  app.getRootNode().attachChild(g);
 		
-
+		  loadedObjects.add(g);
 	
 	
 }

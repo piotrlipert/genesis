@@ -1,91 +1,233 @@
 package genesis;
 
-import guiutils.DisplayUtils;
-import guiutils.STLInterface;
 
-import com.jme3.app.SimpleApplication;
-import com.jme3.asset.plugins.FileLocator;
-import com.jme3.material.Material;
-import com.jme3.scene.Geometry;
-import com.jme3.scene.Mesh;
+import com.jme3.app.Application;
 import com.jme3.system.AppSettings;
-import com.jme3.post.FilterPostProcessor;
-import com.jme3.post.filters.BloomFilter;
- 
-/** Sample 1 - how to get started with the most simple JME 3 application.
- * Display a blue 3D cube and view from all sides by
- * moving the mouse and pressing the WASD keys. */
-public class Genesis extends SimpleApplication {
-	public  STLInterface s;
-	public  DisplayUtils d;
-	boolean isLoaded;
-	boolean isRotating;
-	boolean isTranslating;
-	
-	
-	
-	
-    public static void main(String[] args){
-    	
-    	// This is the main loop. Comment this to do your shit.
-    	
-        Genesis app = new Genesis();
-        app.initSettings();
-        app.start(); 
-    }
+import com.jme3.system.JmeCanvasContext;
+import com.jme3.util.JmeFormatter;
 
-	private  void initSettings() 
-	{
-		s = new STLInterface();
-		d = new DisplayUtils();
-		
-		AppSettings settings = new AppSettings(true);
-        settings.setResolution(640,480);
-        setSettings(settings);
-        setShowSettings(false);
-        
-    	
-	}
- 
-    private void initGlow() 
-    {
-    	FilterPostProcessor fpp=new FilterPostProcessor(assetManager);
-    	BloomFilter bloom = new BloomFilter(BloomFilter.GlowMode.Objects);
-    	fpp.addFilter(bloom);
-    	viewPort.addProcessor(fpp);		
-	}
+import guiutils.DragDropFrame;
 
-	private void registerLocators() 
-	{
-		assetManager.registerLocator("assets/Textures/", FileLocator.class);
-	}
+import java.awt.BorderLayout;
+import java.awt.Canvas;
+import java.awt.Container;
+import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.util.concurrent.Callable;
+import java.util.logging.ConsoleHandler;
+import java.util.logging.Handler;
+import java.util.logging.Logger;
+import javax.swing.*;
 
-	@Override
-    public void simpleInitApp() {
-        
-		
-		registerLocators();
-        initGlow();
+public class Genesis {
 
-    	flyCam.setDragToRotate(false);
-    	flyCam.setMoveSpeed(20f);
-    	d.initTable(this);
-    	
-    	Mesh outMesh = d.createGeometry("resources/dragon.stl",s);
-        Geometry g = new Geometry("STLFILE", outMesh);
-        
-        Material mat = d.initSTLMaterial(this);
-        g.setMaterial(mat);
-        g.move(0f, 0f, 0f);
-        g.rotate((float) (-Math.PI/2), 0, 0);
-        rootNode.attachChild(g);            
-        d.initLight(this);
-         
-         
+   private static JmeCanvasContext context;
+   private static Canvas canvas;
+   private static GenesisApp app = new GenesisApp();
+   private static JFrame frame;
+   private static Container canvasPanel1, canvasPanel2;
+   private static Container currentPanel;
+   private static JTabbedPane tabbedPane;
+   private static final String appClass = "jme3test.post.TestRenderToTexture";
 
-    }
+   private static void createTabs(){
+       tabbedPane = new JTabbedPane();
+       
+       canvasPanel1 = new JPanel();
+       canvasPanel1.setLayout(new BorderLayout());
+       tabbedPane.addTab("jME3 Canvas 1", canvasPanel1);
+       
+       canvasPanel2 = new JPanel();
+       canvasPanel2.setLayout(new BorderLayout());
+       tabbedPane.addTab("jME3 Canvas 2", canvasPanel2);
+       
+       frame.getContentPane().add(tabbedPane);
+       
+       currentPanel = canvasPanel1;
+   }
+   
+   private static void createMenu(){
+       JMenuBar menuBar = new JMenuBar();
+       frame.setJMenuBar(menuBar);
 
-	
+       JMenu menuTortureMethods = new JMenu("Canvas Torture Methods");
+       menuBar.add(menuTortureMethods);
 
-	
+       final JMenuItem itemRemoveCanvas = new JMenuItem("Remove Canvas");
+       menuTortureMethods.add(itemRemoveCanvas);
+       itemRemoveCanvas.addActionListener(new ActionListener() {
+           public void actionPerformed(ActionEvent e) {
+               if (itemRemoveCanvas.getText().equals("Remove Canvas")){
+                   currentPanel.remove(canvas);
+
+                   itemRemoveCanvas.setText("Add Canvas");
+               }else if (itemRemoveCanvas.getText().equals("Add Canvas")){
+                   currentPanel.add(canvas, BorderLayout.CENTER);
+                   
+                   itemRemoveCanvas.setText("Remove Canvas");
+               }
+           }
+       });
+       
+       final JMenuItem itemHideCanvas = new JMenuItem("Hide Canvas");
+       menuTortureMethods.add(itemHideCanvas);
+       itemHideCanvas.addActionListener(new ActionListener() {
+           public void actionPerformed(ActionEvent e) {
+               if (itemHideCanvas.getText().equals("Hide Canvas")){
+                   canvas.setVisible(false);
+                   itemHideCanvas.setText("Show Canvas");
+               }else if (itemHideCanvas.getText().equals("Show Canvas")){
+                   canvas.setVisible(true);
+                   itemHideCanvas.setText("Hide Canvas");
+               }
+           }
+       });
+       
+       final JMenuItem itemSwitchTab = new JMenuItem("Switch to tab #2");
+       menuTortureMethods.add(itemSwitchTab);
+       itemSwitchTab.addActionListener(new ActionListener(){
+          public void actionPerformed(ActionEvent e){
+              if (itemSwitchTab.getText().equals("Switch to tab #2")){
+                  canvasPanel1.remove(canvas);
+                  canvasPanel2.add(canvas, BorderLayout.CENTER);
+                  currentPanel = canvasPanel2;
+                  itemSwitchTab.setText("Switch to tab #1");
+              }else if (itemSwitchTab.getText().equals("Switch to tab #1")){
+                  canvasPanel2.remove(canvas);
+                  canvasPanel1.add(canvas, BorderLayout.CENTER);
+                  currentPanel = canvasPanel1;
+                  itemSwitchTab.setText("Switch to tab #2");
+              }
+          } 
+       });
+       
+       JMenuItem itemSwitchLaf = new JMenuItem("Switch Look and Feel");
+       menuTortureMethods.add(itemSwitchLaf);
+       itemSwitchLaf.addActionListener(new ActionListener(){
+           public void actionPerformed(ActionEvent e){
+               try {
+                   UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+               } catch (Throwable t){
+                   t.printStackTrace();
+               }
+               SwingUtilities.updateComponentTreeUI(frame);
+               frame.pack();
+           }
+       });
+       
+       JMenuItem itemSmallSize = new JMenuItem("Set size to (0, 0)");
+       menuTortureMethods.add(itemSmallSize);
+       itemSmallSize.addActionListener(new ActionListener(){
+           public void actionPerformed(ActionEvent e){
+               Dimension preferred = frame.getPreferredSize();
+               frame.setPreferredSize(new Dimension(0, 0));
+               frame.pack();
+               frame.setPreferredSize(preferred);
+           }
+       });
+       
+       JMenuItem itemKillCanvas = new JMenuItem("Stop/Start Canvas");
+       menuTortureMethods.add(itemKillCanvas);
+       itemKillCanvas.addActionListener(new ActionListener() {
+           public void actionPerformed(ActionEvent e) {
+               currentPanel.remove(canvas);
+               app.stop(true);
+
+               createCanvas(appClass);
+               currentPanel.add(canvas, BorderLayout.CENTER);
+               frame.pack();
+               startApp();
+           }
+       });
+
+       JMenuItem itemExit = new JMenuItem("Exit");
+       menuTortureMethods.add(itemExit);
+       itemExit.addActionListener(new ActionListener() {
+           public void actionPerformed(ActionEvent ae) {
+               frame.dispose();
+               app.stop();
+           }
+       });
+   }
+   
+   private static void createFrame(){
+       frame = new DragDropFrame(app);
+       frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+       
+       
+       frame.addWindowListener(new WindowAdapter(){
+           @Override
+           public void windowClosed(WindowEvent e) {
+               app.stop();
+           }
+       });
+
+       createTabs();
+       createMenu();
+   }
+
+   public static void createCanvas(String appClass){
+       AppSettings settings = new AppSettings(true);
+       settings.setWidth(640);
+       settings.setHeight(480);
+
+     
+       app.setPauseOnLostFocus(false);
+       app.setSettings(settings);
+       app.createCanvas();
+       app.startCanvas();
+
+       context = (JmeCanvasContext) app.getContext();
+       canvas = context.getCanvas();
+       canvas.setSize(settings.getWidth(), settings.getHeight());
+   }
+
+   public static void startApp(){
+       app.startCanvas();
+       app.enqueue(new Callable<Void>(){
+           public Void call(){
+               if (app instanceof GenesisApp){
+                   GenesisApp simpleApp = (GenesisApp) app;
+                   simpleApp.getFlyByCamera().setDragToRotate(true);
+               }
+               return null;
+           }
+       });
+       
+   }
+
+   public static void main(String[] args){
+       JmeFormatter formatter = new JmeFormatter();
+
+       Handler consoleHandler = new ConsoleHandler();
+       consoleHandler.setFormatter(formatter);
+
+       Logger.getLogger("").removeHandler(Logger.getLogger("").getHandlers()[0]);
+       Logger.getLogger("").addHandler(consoleHandler);
+       
+       createCanvas(appClass);
+       
+       try {
+           Thread.sleep(500);
+       } catch (InterruptedException ex) {
+       }
+       
+       SwingUtilities.invokeLater(new Runnable(){
+           public void run(){
+               JPopupMenu.setDefaultLightWeightPopupEnabled(false);
+
+               createFrame();
+               
+               currentPanel.add(canvas, BorderLayout.CENTER);
+               frame.pack();
+               startApp();
+               frame.setLocationRelativeTo(null);
+               frame.setVisible(true);
+           }
+       });
+   }
+
 }

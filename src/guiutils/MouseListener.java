@@ -1,5 +1,6 @@
 package guiutils;
 
-public class MouseListener {
+public class MouseListener 
+{
 
 }

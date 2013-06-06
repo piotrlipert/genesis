@@ -28,6 +28,8 @@ class STLObject
 	ArrayList<Facet> f = new ArrayList<Facet>();
 	
 	
+	
+	
 	public void addFacet(Facet c)
 	{
 		
@@ -50,6 +52,7 @@ class STLObject
 public class STLInterface 
 {
 
+	
 	public ArrayList<Facet> facets;
 	
 	public STLInterface()
@@ -58,7 +61,10 @@ public class STLInterface
 		facets = new ArrayList<Facet>();
 		
 	}
-	
+	public void clear()
+	{
+		facets.clear();
+	}
 	
 	public void printFacets()
 	{
